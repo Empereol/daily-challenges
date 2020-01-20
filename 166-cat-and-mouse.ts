@@ -32,7 +32,9 @@ function main() {
     { board: "...m....D....C.......", range: 10 }
   ];
 
-  games.forEach(game => console.log(game, getMouseState(game.board, game.range)));
+  for (const { board, range } of games) {
+    console.log(getMouseState(board, range));
+  }
 }
 
 /**
@@ -47,7 +49,7 @@ function getMouseState(board: string, range: number): MouseState {
   const mouse = field.indexOf(GameCharacter.Mouse);
   const dog = field.indexOf(GameCharacter.Dog);
 
-  if (isBetween([cat, mouse], dog)) {
+  if (isBetween(dog, [cat, mouse])) {
     return MouseState.Protected;
   } else if (inRange(cat, mouse, range)) {
     return MouseState.Caught;
@@ -68,10 +70,10 @@ function inRange(pos1: number, pos2: number, range: number): boolean {
 
 /**
  *  Check to see if the value is between the outside most posts
- * @param posts
  * @param value
+ * @param posts
  */
-function isBetween(posts: number[], value: number): boolean {
+function isBetween(value: number, posts: number[]): boolean {
   let min = Math.min(...posts);
   let max = Math.max(...posts);
 
