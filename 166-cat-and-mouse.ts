@@ -13,42 +13,69 @@
 // ...m.........C...D returns 'Caught!' <--Cat can jump far enough and jump is not over dog
 // ...m....D....C....... returns 'Protected!' <-- Cat can jump far enough, but dog is in the way, protecting the mouse
 
+enum MouseState {
+  Protected = "Protected!",
+  Caught = "Caught!",
+  Escaped = "Escaped!"
+}
+
+enum GameCharacter {
+  Mouse = "m",
+  Cat = "C",
+  Dog = "D"
+}
+
 function main() {
-  const games: { s: string; r: number }[] = [
-    { s: ".....C............m......", r: 5  },
-    { s: "...m.........C...D",        r: 10 },
-    { s: "...m....D....C.......",     r: 10 }
+  const games: { board: string; range: number }[] = [
+    { board: ".....C............m......", range: 5 },
+    { board: "...m.........C...D", range: 10 },
+    { board: "...m....D....C.......", range: 10 }
   ];
 
-  games.forEach(g => console.log(g, mouseEscaped(g.s, g.r)));
+  games.forEach(game => console.log(game, getMouseState(game.board, game.range)));
 }
 
-function mouseEscaped(input: string, range: number): string {
-  let arr = input.split("");
+/**
+ * Given the game input string and range, determine the state of the mouse
+ * @param board Game input. Series of GameCharacter and '.' (ex: ".....C............m......")
+ * @param range Game range.
+ */
+function getMouseState(board: string, range: number): MouseState {
+  const field = board.split("");
 
-  let c = arr.indexOf("C");
-  let m = arr.indexOf("m");
-  let d = arr.indexOf("D");
-  let r = range;
+  const cat = field.indexOf(GameCharacter.Cat);
+  const mouse = field.indexOf(GameCharacter.Mouse);
+  const dog = field.indexOf(GameCharacter.Dog);
 
-  if (isProtected(c, m, d)) {
-    return "Protected!";
-  } else if (inRange(c, m, r)) {
-    return "Caught!";
+  if (isBetween([cat, mouse], dog)) {
+    return MouseState.Protected;
+  } else if (inRange(cat, mouse, range)) {
+    return MouseState.Caught;
   }
 
-  return "Escaped!";
+  return MouseState.Escaped;
 }
 
+/**
+ * Check to see if the distance between position1 and position2 is within the specified range
+ * @param pos1 Position 1
+ * @param pos2 Position 2
+ * @param range Range
+ */
 function inRange(pos1: number, pos2: number, range: number): boolean {
   return Math.abs(pos1 - pos2) <= range;
 }
 
-function isProtected(catPos: number, mousePos: number, dogPos: number): boolean {
-  let min = Math.min(catPos, mousePos);
-  let max = Math.max(catPos, mousePos);
+/**
+ *  Check to see if the value is between the outside most posts
+ * @param posts
+ * @param value
+ */
+function isBetween(posts: number[], value: number): boolean {
+  let min = Math.min(...posts);
+  let max = Math.max(...posts);
 
-  return dogPos > min && dogPos < max;
+  return value > min && value < max;
 }
 
 main();
