@@ -40,8 +40,8 @@ function mouseEscaped(input: string, range: number): string {
   return "Escaped!";
 }
 
-function inRange(catPos: number, mousePos: number, range: number): boolean {
-  return Math.abs(catPos - mousePos) <= range;
+function inRange(pos1: number, pos2: number, range: number): boolean {
+  return Math.abs(pos1 - pos2) <= range;
 }
 
 function isProtected(catPos: number, mousePos: number, dogPos: number): boolean {
