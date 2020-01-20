@@ -15,9 +15,9 @@
 
 function main() {
   const games: { s: string; r: number }[] = [
-    { s: ".....C............m......", r: 5 },
-    { s: "...m.........C...D", r: 10 },
-    { s: "...m....D....C.......", r: 10 }
+    { s: ".....C............m......", r: 5  },
+    { s: "...m.........C...D",        r: 10 },
+    { s: "...m....D....C.......",     r: 10 }
   ];
 
   games.forEach(g => console.log(g, mouseEscaped(g.s, g.r)));
