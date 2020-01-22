@@ -27,7 +27,7 @@ enum GameCharacter {
   Dog = "D"
 }
 
-function main() {
+function main(): void {
   const games: { board: string; range: number }[] = [
     { board: ".....C............m......", range: 5 },
     { board: "...m.........C...D", range: 10 },

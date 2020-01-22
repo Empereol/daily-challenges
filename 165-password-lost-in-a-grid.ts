@@ -39,7 +39,7 @@ const games: { grid: string[][]; directions: string[] }[] = [
   }
 ];
 
-function main() {
+function main(): void {
   for (const { grid, directions } of games) {
     console.log(getPassword(grid, directions));
   }
