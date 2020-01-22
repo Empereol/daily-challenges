@@ -20,7 +20,7 @@
 
 // "" -> "" - an empty input should result in an empty output
 
-function main(): void {
+(function main(): void {
   const input: string[] = [
     "21AxBz",
     "abacad",
@@ -32,7 +32,7 @@ function main(): void {
   for (let i of input) {
     console.log(blockedString(i, "-"));
   }
-}
+})();
 
 /**
  * Separate a string by block of unique [a-z][A-Z][0-9] characters joined by the `joiner` character
@@ -69,5 +69,3 @@ function blockedString(input: string, joiner: string): string {
 
   return sortedblocks.map(b => b.join("")).join(joiner);
 }
-
-main();
