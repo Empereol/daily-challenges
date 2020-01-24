@@ -11,42 +11,26 @@
 // Pad with spaces so each line is the same length. The last line having only stars, no spaces.
 
 (function main(): void {
-  const games = [5, 10, 100, 0];
+  const games = [5, 10, 20, 0, -1];
 
   for (const game of games) {
     console.log(christmasTree(game));
   }
 })();
 
+/**
+ * Create an ASCII Christmas tree
+ * @param height How many rows
+ */
 function christmasTree(height: number): string {
-  if (height <= 0) {
-    return 'Height must be greater than 0.';
-  }
+  const width = height * 2 - 1;
 
-  // Create an array the size of the height of the tree
-  // Each item should contain an array with a length equal
-  // to the height of the tree multiplied by 2 subtract 1
-  const rows: string[][] = new Array(height).fill(new Array(height * 2 - 1).fill(''));
+  return Array.from({ length: height }, (row, idx) => {
+    const stars = idx + 1;
 
-  // Create the "tree" upside down since it's esier for my
-  // brain to match the amount of space to the current idx
-  const inverseTree = rows.map((row, idx) => {
-    if (idx > 0) {
-      row = row.map((r, i) => {
-        if (i < idx || i >= row.length - idx) {
-          return ' ';
-        } else {
-          return '*';
-        }
-      });
-    }
-
-    return row;
-  });
-
-  // Return the flipped tree joined into a single string
-  return inverseTree
-    .reverse()
-    .map(r => r.join(''))
-    .join('\n');
+    return '*'
+      .repeat(stars * 2 - 1)
+      .padStart(width / 2 + stars)
+      .padEnd(width);
+  }).join('\n');
 }
