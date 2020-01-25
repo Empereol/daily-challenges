@@ -1,3 +1,6 @@
+// Daily Challenge #170 - Pokemon Damage Calculator
+// https://dev.to/thepracticaldev/daily-challenge-170-pokemon-damage-calculator-97d
+
 // Setup
 // For this challenge, you'll be thrown into a Pokemon battle! Calculate the damage that a particular move would do using the following formula:
 
@@ -40,11 +43,25 @@
 // Good luck!
 
 type ElementMap = { [key in Elemnt]: { [key in Elemnt]: Effectiveness } };
+type EffectivenessMap = { [key in Effectiveness]: string };
 
-interface Pokemon {
-  ap?: number;
-  def?: number;
+interface Combatant {
+  name: string;
   element: Elemnt;
+}
+
+interface Attacker extends Combatant {
+  ap: number;
+}
+
+interface Defender extends Combatant {
+  ar: number;
+}
+
+interface Combat {
+  dmg: number;
+  attacker: Attacker;
+  defender: Defender;
 }
 
 enum Elemnt {
@@ -59,6 +76,12 @@ enum Effectiveness {
   Neutral = 1,
   NotVery = 0.5
 }
+
+const EffectivenessMsg: EffectivenessMap = {
+  [Effectiveness.Super]: "It was super effective!",
+  [Effectiveness.NotVery]: "It was not very effective...",
+  [Effectiveness.Neutral]: ""
+};
 
 const ElementEffectivenessMap: ElementMap = {
   [Elemnt.Electric]: {
@@ -88,42 +111,82 @@ const ElementEffectivenessMap: ElementMap = {
 };
 
 (function main(): void {
-  const tests: { offense: Pokemon; defense: Pokemon; dmg: number }[] = [
+  const combats: Combat[] = [
     {
       dmg: 10,
-      offense: { element: Elemnt.Grass, ap: 57 },
-      defense: { element: Elemnt.Electric, def: 19 }
+      attacker: {
+        name: "Bulbasaur",
+        ap: 57,
+        element: Elemnt.Grass
+      },
+      defender: {
+        name: "Pikachu",
+        ar: 19,
+        element: Elemnt.Electric
+      }
     },
     {
       dmg: 10,
-      offense: { element: Elemnt.Grass, ap: 40 },
-      defense: { element: Elemnt.Water, def: 40 }
+      attacker: {
+        name: "Bulbasaur",
+        ap: 40,
+        element: Elemnt.Grass
+      },
+      defender: {
+        name: "Squirtle",
+        ar: 40,
+        element: Elemnt.Water
+      }
     },
     {
       dmg: 10,
-      offense: { element: Elemnt.Grass, ap: 35 },
-      defense: { element: Elemnt.Fire, def: 5 }
+      attacker: {
+        name: "Bulbasaur",
+        ap: 35,
+        element: Elemnt.Grass
+      },
+      defender: {
+        name: "Charmander",
+        ar: 5,
+        element: Elemnt.Fire
+      }
     },
     {
       dmg: 10,
-      offense: { element: Elemnt.Fire, ap: 10 },
-      defense: { element: Elemnt.Electric, def: 2 }
+      attacker: {
+        name: "Charmander",
+        ap: 10,
+        element: Elemnt.Fire
+      },
+      defender: {
+        name: "Pikachu",
+        ar: 2,
+        element: Elemnt.Electric
+      }
     }
   ];
 
-  for (const { dmg, offense, defense } of tests) {
-    console.log(calculateDamage(dmg, offense, defense));
+  for (const { dmg, attacker, defender } of combats) {
+    console.log(combat(dmg, attacker, defender), {dmg, attacker, defender});
   }
 })();
 
-function calculateDamage(
+function combat(dmg: number, attacker: Attacker, defender: Defender): string {
+  const effectiveness =
+    ElementEffectivenessMap[attacker.element][defender.element];
+
+  const totalDmg = totalDamage(dmg, attacker.ap, defender.ar, effectiveness);
+
+  return `${attacker.name} (${attacker.element}) strikes ${defender.name} (${
+    defender.element
+  }) for ${totalDmg} damage. ${EffectivenessMsg[effectiveness]}`;
+}
+
+function totalDamage(
   dmg: number,
-  offense: Pokemon,
-  defense: Pokemon
+  attackPower: number,
+  armorRating: number,
+  multiplier: number
 ): number {
-  return (
-    dmg *
-    (offense.ap / defense.def) *
-    ElementEffectivenessMap[offense.element][defense.element]
-  );
+  return dmg * (attackPower / armorRating) * multiplier;
 }
