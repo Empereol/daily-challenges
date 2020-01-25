@@ -24,10 +24,10 @@ interface Combat {
 }
 
 enum Elemnt {
-  Fire = "fire",
-  Water = "water",
-  Grass = "grass",
-  Electric = "electric"
+  Fire = 'fire',
+  Water = 'water',
+  Grass = 'grass',
+  Electric = 'electric'
 }
 
 enum Effectiveness {
@@ -37,9 +37,9 @@ enum Effectiveness {
 }
 
 const EffectivenessMsg: EffectivenessMap = {
-  [Effectiveness.Super]: "It was super effective!",
-  [Effectiveness.NotVery]: "It was not very effective...",
-  [Effectiveness.Neutral]: ""
+  [Effectiveness.Super]: 'It was super effective!',
+  [Effectiveness.NotVery]: 'It was not very effective...',
+  [Effectiveness.Neutral]: ''
 };
 
 const ElementEffectivenessMap: ElementMap = {
@@ -71,30 +71,30 @@ const ElementEffectivenessMap: ElementMap = {
 
 (function main(): void {
   const combats: Combat[] = [
-    { 
-      dmg: 10, 
-      attacker: { name: "Bulbasaur", ap: 57, element: Elemnt.Grass }, 
-      defender: { name: "Pikachu", ar: 19,element: Elemnt.Electric }
+    {
+      dmg: 10,
+      attacker: { name: 'Bulbasaur', ap: 57, element: Elemnt.Grass },
+      defender: { name: 'Pikachu', ar: 19, element: Elemnt.Electric }
     },
     {
       dmg: 10,
-      attacker: { name: "Bulbasaur", ap: 40, element: Elemnt.Grass },
-      defender: { name: "Squirtle", ar: 40, element: Elemnt.Water }
+      attacker: { name: 'Bulbasaur', ap: 40, element: Elemnt.Grass },
+      defender: { name: 'Squirtle', ar: 40, element: Elemnt.Water }
     },
     {
       dmg: 10,
-      attacker: { name: "Bulbasaur", ap: 35, element: Elemnt.Grass },
-      defender: { name: "Charmander", ar: 5, element: Elemnt.Fire }
+      attacker: { name: 'Bulbasaur', ap: 35, element: Elemnt.Grass },
+      defender: { name: 'Charmander', ar: 5, element: Elemnt.Fire }
     },
     {
       dmg: 10,
-      attacker: { name: "Charmander", ap: 10, element: Elemnt.Fire },
-      defender: { name: "Pikachu", ar: 2, element: Elemnt.Electric }
+      attacker: { name: 'Charmander', ap: 10, element: Elemnt.Fire },
+      defender: { name: 'Pikachu', ar: 2, element: Elemnt.Electric }
     }
   ];
 
   for (const { dmg, attacker, defender } of combats) {
-    console.log(combat(dmg, attacker, defender), {dmg, attacker, defender});
+    console.log(combat(dmg, attacker, defender), { dmg, attacker, defender });
   }
 })();
 
