@@ -1,3 +1,5 @@
+import { stringCount } from './utils';
+
 enum MapTile {
   Ocean = 'X',
   Uninfected = '0',
@@ -14,8 +16,7 @@ enum MapTile {
  * @param worldMap Map of the world in the form of a string (`X`: Ocean, `1`: Infected, `0`: Uninfected)
  */
 function pandemia(worldMap: string): number {
-  const peopleCharacters = `${MapTile.Uninfected}|${MapTile.Infected}`;
-  const totalPopulation = (worldMap.match(new RegExp(peopleCharacters, 'g')) || []).length;
+  const totalPopulation = stringCount(worldMap, MapTile.Infected, MapTile.Uninfected);
 
   if (!totalPopulation) {
     return 0;
