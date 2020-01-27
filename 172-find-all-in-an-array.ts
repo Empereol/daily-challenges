@@ -1,11 +1,15 @@
 // Daily Challenge #172 - Find All in an Array
 // https://dev.to/thepracticaldev/daily-challenge-172-find-all-in-an-array-3nob
 
-function findAll<T extends number | string>(input: T[], search: T): number[] {
+/**
+ * Find all occurrences of `n` in the given array and return another array  
+ * containing all the index positions of `n` in the array.
+ */
+function findAll<T extends number | string>(input: T[], n: T): number[] {
   const found: number[] = [];
 
   input.forEach((val, idx) => {
-    if (val === search) found.push(idx);
+    if (val === n) found.push(idx);
   });
 
   return found;
