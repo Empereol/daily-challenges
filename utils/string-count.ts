@@ -4,7 +4,7 @@
  * @param searches Characters to search for
  */
 export function stringCount(input: string, ...searches: string[]): number {
-  const search = `${searches.join('|')}`;
+  const search = searches.join('|');
   return (input.match(new RegExp(search, 'g')) || []).length;
 }
 
