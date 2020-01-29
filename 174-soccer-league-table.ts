@@ -30,10 +30,13 @@ class LeagueTable {
     const match: Match = this.parseMatchString(matchString);
     this.matches.push(match);
 
+    const home = this.updateTeam(match.homeTeam, match.homeScore, match.awayScore);
+    const away = this.updateTeam(match.awayTeam, match.awayScore, match.homeScore);
+
     this.teams = { 
       ...this.teams, 
-      [home.name]: this.updateTeam(match.homeTeam, match.homeScore, match.awayTeam, match.awayScore), 
-      [away.name]: this.updateTeam(match.awayTeam, match.awayScore, match.homeTeam, match.homeScore), 
+      [home.name]: home,
+      [away.name]: away
     };
 
     return match;
