@@ -5,7 +5,7 @@ interface Match {
   awayScore: number;
 }
 
-interface TeamData {
+interface Team {
   name: string;
   goalsFor: number;
   goalsAgainst: number;
@@ -14,7 +14,7 @@ interface TeamData {
   losses: number;
 }
 
-enum Point {
+enum GamePoint {
   win = 3,
   draw = 1,
   loss = 0
@@ -22,19 +22,31 @@ enum Point {
 
 class LeagueTable {
   private matches: Match[] = [];
-  private teams: Record<string, TeamData> = {};
+  private teams: Record<string, Team> = {};
 
   constructor() {}
 
+  public rebuild(): void {
+    // TODO: Rebuild the team data from the stored matches
+    // Like event sourcing
+    console.log('LeagueTable.rebuild() not yet implmented.');
+  }
+
   public push(matchString: string): Match {
     const match: Match = this.parseMatchString(matchString);
+
+    if (!match) {
+      console.warn('Match string was invalid', matchString);
+      return;
+    }
+
     this.matches.push(match);
 
     const home = this.updateTeam(match.homeTeam, match.homeScore, match.awayScore);
     const away = this.updateTeam(match.awayTeam, match.awayScore, match.homeScore);
 
-    this.teams = { 
-      ...this.teams, 
+    this.teams = {
+      ...this.teams,
       [home.name]: home,
       [away.name]: away
     };
@@ -44,7 +56,7 @@ class LeagueTable {
 
   public getPoints(team: string): number {
     const { draws, wins, losses } = this.getTeam(team);
-    return wins * Point.win + draws * Point.draw + losses * Point.loss;
+    return wins * GamePoint.win + draws * GamePoint.draw + losses * GamePoint.loss;
   }
 
   public getGoalsFor(team: string): number {
@@ -73,17 +85,28 @@ class LeagueTable {
   }
 
   public getTable(): string {
-    return Object.keys(this.teams)
-      .map(key => this.teams[key])
-      .reduce((prev, curr, idx, arr) => {
-        return (
-          prev + `${curr.name}\t${curr.wins}\t${curr.draws}\t${curr.losses}\n`
-        );
-      }, "Name \t\t\t W \t\t\t D \t\t\t L\n");
+    const pad = 4;
+    const firstPad = pad * 4;
+    const lastPad = 0;
+
+    const header =
+      'Name'.padEnd(firstPad) + 'PTS'.padEnd(pad) + 'W'.padEnd(pad) + 'D'.padEnd(pad) + 'L'.padEnd(lastPad) + '\n';
+
+    return Object.values(this.teams).reduce((table, team) => {
+      const name = team.name.padEnd(firstPad);
+      const wins = team.wins.toString().padEnd(pad);
+      const draws = team.draws.toString().padEnd(pad);
+      const losses = team.losses.toString().padEnd(lastPad);
+      const pts = this.getPoints(name)
+        .toString()
+        .padEnd(pad);
+
+      return table + `${name}${pts}${wins}${draws}${losses}\n`;
+    }, header);
   }
 
-  private createTeam(name: string): TeamData {
-    const team: TeamData = {
+  private createTeam(name: string): Team {
+    const team: Team = {
       name,
       draws: 0,
       goalsAgainst: 0,
@@ -97,18 +120,23 @@ class LeagueTable {
     return team;
   }
 
-  private getTeam(team: string): TeamData {
+  private getTeam(team: string): Team {
     return this.teams[team] || this.createTeam(team);
   }
 
   private parseMatchString(matchString: string): Match {
-    const regex = new RegExp(/([\S|\s]+) (\d+) - (\d+) ([\S|\s]+)/);
-    const [full, homeTeam, homeScore, awayScore, awayTeam] = matchString.match(regex);
+    const match = matchString.match(new RegExp(/(.+) (\d+) - (\d+) (.+)/));
+
+    if (match.length !== 5) {
+      return;
+    }
+
+    const [full, homeTeam, homeScore, awayScore, awayTeam] = match;
 
     return { homeTeam, homeScore: parseFloat(homeScore), awayTeam, awayScore: parseFloat(awayScore) };
   }
 
-  private updateTeam(teamName: string, teamScore: number, opponentName: string, opponentScore: number): TeamData {
+  private updateTeam(teamName: string, teamScore: number, opponentScore: number): Team {
     const team = { ...this.getTeam(teamName) };
 
     team.goalsFor += teamScore;
@@ -121,7 +149,7 @@ class LeagueTable {
   }
 }
 
-(() => {
+(function main() {
   const lt = new LeagueTable();
 
   const instructions = [
