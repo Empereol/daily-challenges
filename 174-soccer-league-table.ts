@@ -30,21 +30,11 @@ class LeagueTable {
     const match: Match = this.parseMatchString(matchString);
     this.matches.push(match);
 
-    const home = this.updateTeam(
-      match.homeTeam,
-      match.homeScore,
-      match.awayTeam,
-      match.awayScore
-    );
-
-    const away = this.updateTeam(
-      match.awayTeam,
-      match.awayScore,
-      match.homeTeam,
-      match.homeScore
-    );
-
-    this.teams = { ...this.teams, [home.name]: home, [away.name]: away };
+    this.teams = { 
+      ...this.teams, 
+      [home.name]: this.updateTeam(match.homeTeam, match.homeScore, match.awayTeam, match.awayScore), 
+      [away.name]: this.updateTeam(match.awayTeam, match.awayScore, match.homeTeam, match.homeScore), 
+    };
 
     return match;
   }
@@ -110,24 +100,12 @@ class LeagueTable {
 
   private parseMatchString(matchString: string): Match {
     const regex = new RegExp(/([\S|\s]+) (\d+) - (\d+) ([\S|\s]+)/);
-    const [full, homeTeam, homeScore, awayScore, awayTeam] = matchString.match(
-      regex
-    );
+    const [full, homeTeam, homeScore, awayScore, awayTeam] = matchString.match(regex);
 
-    return {
-      homeTeam,
-      homeScore: parseFloat(homeScore),
-      awayTeam,
-      awayScore: parseFloat(awayScore)
-    };
+    return { homeTeam, homeScore: parseFloat(homeScore), awayTeam, awayScore: parseFloat(awayScore) };
   }
 
-  private updateTeam(
-    teamName: string,
-    teamScore: number,
-    opponentName: string,
-    opponentScore: number
-  ): TeamData {
+  private updateTeam(teamName: string, teamScore: number, opponentName: string, opponentScore: number): TeamData {
     const team = { ...this.getTeam(teamName) };
 
     team.goalsFor += teamScore;
@@ -136,7 +114,7 @@ class LeagueTable {
     team.draws += teamScore === opponentScore && 1;
     team.losses += teamScore < opponentScore && 1;
 
-    return { ...team };
+    return team;
   }
 }
 
