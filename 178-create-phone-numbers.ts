@@ -18,7 +18,7 @@ createPhoneNumber([1, 2, 3, 4, 5, 6, 7, 8, 9, 0])
 
 */
 
-function createPhoneNumber(input: number[], encrypt?: boolean): string | undefined {
+export function createPhoneNumber(input: number[], encrypt?: boolean): string | undefined {
     if (input.length !== 10) {
         console.error("Invalid input. Input length must be exactly 10.");
         return;
