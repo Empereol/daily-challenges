@@ -18,13 +18,17 @@ createPhoneNumber([1, 2, 3, 4, 5, 6, 7, 8, 9, 0])
 
 */
 
-function createPhoneNumber(input: number[]): string | undefined {
+function createPhoneNumber(input: number[], encrypt?: boolean): string | undefined {
     if (input.length !== 10) {
         console.error("Invalid input. Input length must be exactly 10.");
         return;
     }
 
-    const [a, b, c, d, e, f, g, h, i, j] = input;
+    let [a, b, c, d, e, f, g, h, i, j]: (number | string)[]  = input;
+    
+    if (encrypt) {
+        e = f = g = h = i = j = "X";
+    }
 
     return `(${a}${b}${c}) ${d}${e}${f}-${g}${h}${i}${j}`
 }
