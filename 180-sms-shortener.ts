@@ -29,15 +29,14 @@ freshly written message is 164 characters long."
 "ThereIsNoSpoonThereIsNoSpoonThereIsNoSpoonThereIsNoSpoonThereIsNoSpoonThereIsNoSpoonThereIsNoSpoonThereIsNoSpoonThereIsNoSpoonThereIsNoSpoonThereIsNoSpoonThereIsNoSpoonThereIsNoSpoon"
 */
 
-const MAX_CHARACTERS = 160;
-
 /**
  * Shorten the message to 160 characters, starting from the end, by replacing spaces
  * with camelCase, as much as necessary.
  * @param message Message to shorten
+ * @param maxLength Maximum message length to return
  */
-function smsShortener(message: string): string {
-  const toRemove: number = message.length - MAX_CHARACTERS;
+function smsShortener(message: string, maxLength: number = 160): string {
+  const toRemove: number = message.length - maxLength;
 
   // Return the message if it's short enough
   if (toRemove <= 0) {
@@ -53,9 +52,9 @@ function smsShortener(message: string): string {
     return `${msg} ${word}`;
   });
 
-  // Return only the first `MAX_CHARACTERS`... Hopefully there were enough spaces
+  // Return only the first `maxLength`... Hopefully there were enough spaces
   // to shorten the message enough... Otherwise, it gets the chop!
-  return shortenedMsg.substring(0, MAX_CHARACTERS);
+  return shortenedMsg.substring(0, maxLength);
 }
 
 (function main() {
