@@ -19,30 +19,30 @@ createPhoneNumber([1, 2, 3, 4, 5, 6, 7, 8, 9, 0])
 */
 
 export function createPhoneNumber(input: number[], encrypt?: boolean): string | undefined {
-    if (input.length !== 10) {
-        console.error("Invalid input. Input length must be exactly 10.");
-        return;
-    }
+  if (input.length !== 10) {
+    console.error('Invalid input. Input length must be exactly 10.');
+    return;
+  }
 
-    let [a, b, c, d, e, f, g, h, i, j]: (number | string)[]  = input;
-    
-    if (encrypt) {
-        e = f = g = h = i = j = "X";
-    }
+  let [a, b, c, d, e, f, g, h, i, j]: (number | string)[] = input;
 
-    return `(${a}${b}${c}) ${d}${e}${f}-${g}${h}${i}${j}`
+  if (encrypt) {
+    e = f = g = h = i = j = 'X';
+  }
+
+  return `(${a}${b}${c}) ${d}${e}${f}-${g}${h}${i}${j}`;
 }
 
 (function main() {
-    const tests = [
-        [1, 2, 3, 4, 5, 6, 7, 8, 9, 0],
-        [1, 2, 3, 4, 5, 6, 7, 8, 9, 0],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-        [1, 2, 3, 4, 5, 6, 7, 8, 9, 0],
-        [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1],
-    ];
+  const tests = [
+    [1, 2, 3, 4, 5, 6, 7, 8, 9, 0],
+    [1, 2, 3, 4, 5, 6, 7, 8, 9, 0],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 2, 3, 4, 5, 6, 7, 8, 9, 0],
+    [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1]
+  ];
 
-    for (const test of tests) {
-        console.log(createPhoneNumber(test));
-    }
+  for (const test of tests) {
+    console.log(createPhoneNumber(test));
+  }
 })();
