@@ -36,6 +36,8 @@ freshly written message is 164 characters long."
  * @param maxLength Maximum message length to return
  */
 function smsShortener(message: string, maxLength: number = 160): string {
+  message = message.trim();
+
   const toRemove: number = message.length - maxLength;
 
   // Return the message if it's short enough
