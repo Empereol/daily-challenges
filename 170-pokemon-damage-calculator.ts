@@ -9,18 +9,18 @@ interface Combatant {
   element: Elemnt;
 }
 
-interface Attacker extends Combatant {
+interface CombatAttacker extends Combatant {
   ap: number;
 }
 
-interface Defender extends Combatant {
+interface CombatDefender extends Combatant {
   ar: number;
 }
 
 interface Combat {
   dmg: number;
-  attacker: Attacker;
-  defender: Defender;
+  attacker: CombatAttacker;
+  defender: CombatDefender;
 }
 
 enum Elemnt {
@@ -98,13 +98,23 @@ const ElementEffectivenessMap: ElementMap = {
   }
 })();
 
-function combat(dmg: number, attacker: Attacker, defender: Defender): string {
-  const effectiveness = ElementEffectivenessMap[attacker.element][defender.element];
+function combat(
+  dmg: number,
+  attacker: CombatAttacker,
+  defender: CombatDefender
+): string {
+  const effectiveness =
+    ElementEffectivenessMap[attacker.element][defender.element];
   const totalDmg = totalDamage(dmg, attacker.ap, defender.ar, effectiveness);
 
   return `${attacker.name} (${attacker.element}) strikes ${defender.name} (${defender.element}) for ${totalDmg} damage. ${EffectivenessMsg[effectiveness]}`;
 }
 
-function totalDamage(dmg: number, attackPower: number, armorRating: number, multiplier: number): number {
+function totalDamage(
+  dmg: number,
+  attackPower: number,
+  armorRating: number,
+  multiplier: number
+): number {
   return dmg * (attackPower / armorRating) * multiplier;
 }
