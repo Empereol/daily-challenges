@@ -1,3 +1,27 @@
+/*
+Daily Challenge #181 - Is King in Check?
+https://dev.to/thepracticaldev/daily-challenge-181-is-king-in-check-5d4k
+
+Setup
+Implement a function that takes for input an 8x8 chessboard in the form of a bi-dimensional array. 
+It should return true if the black king is in check or false if it is not.
+
+The array will include 64 squares which can contain the following characters:
+
+♔ for the black King;
+♛ for a white Queen;
+♝ for a white Bishop;
+♞ for a white Knight;
+♜ for a white Rook;
+♟ for a white Pawn;
+a space if there is no piece on that square.
+
+The board is oriented from Black's perspective. There will always be only one king (yours), 
+all the other pieces will be white. Remember line of sight and attack patterns of chess pieces. 
+
+Input will always be valid.
+*/
+
 enum BlackPiece {
   King = '♔'
 }
@@ -91,7 +115,8 @@ function getAvailableAttacks(piece: GamePiece, maxWidth: number = 8, maxHeight: 
  * @param param0 Starting vector
  */
 function getPawnAttacks([pieceRow, pieceCol]: Vector): Vector[] {
-  // Not sure if we need to waste time fitlering out invalid/offboard spaces like [-1, 0]...
+  // TODO: Pawns can actually only attack in one direction...
+  // Either towards/down (enemy pawn) or away/up (your pawn)
   const upLeft: Vector = [pieceRow - 1, pieceCol - 1];
   const upRight: Vector = [pieceRow - 1, pieceCol + 1];
   const bottomLeft: Vector = [pieceRow + 1, pieceCol - 1];
