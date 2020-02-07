@@ -214,6 +214,24 @@ function getKnightAttacks([pieceRow, pieceCol]: Vector): Vector[] {
   return [ul, ur, dl, dr, ru, rd, lu, ld];
 }
 
+// TODO: Actually use this...
+/**
+ * Return a set of valid (within game board) and unique attacks
+ * @param attacks Array of attacks to cleanup/validate
+ * @param maxWidth Width of game board
+ * @param maxHeight Height of game board
+ */
+function validAttacks(attacks: Vector[], maxWidth: number, maxHeight: number): Vector[] {
+  return attacks.reduce((acc: Vector[], [row, col]: Vector) => {
+    // If the vector is outside the bounds or already exists, skip it.
+    if (((col < 0 || col > maxWidth) && (row < 0 || row > maxHeight)) || acc.some(vec => vec[0] === row && vec[1] === col)) {
+      return acc;
+    }
+    // Otherwise add it...
+    return [...acc, [row, col] as Vector];
+  }, []);
+}
+
 (function main() {
   const tests = [
     [
