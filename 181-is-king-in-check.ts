@@ -53,7 +53,7 @@ function kingIsInCheck(chessboard: string[][]): boolean {
     console.warn('Game board is invalid. Not square...');
     return false;
   }
-  
+
   const attacker = findPiece(chessboard, Object.values(WhitePiece));
 
   if (!attacker) {
@@ -95,7 +95,7 @@ function findPiece(chessboard: string[][], search: ChessPiece[]): GamePiece {
 function getAvailableAttacks(piece: GamePiece, maxWidth: number = 8, maxHeight: number = 8): Vector[] {
   switch (piece.type) {
     case WhitePiece.Bishop: {
-      return getBishopAttacks(piece.pos, maxWidth, maxHeight);
+      return getBishopAttacks(piece.pos, maxHeight);
     }
     case WhitePiece.Pawn: {
       return getPawnAttacks(piece.pos);
@@ -146,19 +146,18 @@ function getPawnAttacks([pieceRow, pieceCol]: Vector, direction: number = 1): Ve
  * @param maxWidth Chessboard width
  * @param maxHeight Chessboard height
  */
-function getBishopAttacks([pieceRow, pieceCol]: Vector, maxWidth: number, maxHeight: number): Vector[] {
+function getBishopAttacks([pieceRow, pieceCol]: Vector, maxHeight: number): Vector[] {
   const attacks: Vector[] = [];
 
   for (let row = 0; row < maxHeight; row++) {
-    for (let col = 0; col < maxWidth; col++) {
-      const rowsFromPiece = Math.abs(row - pieceRow);
+    const rowsFromPiece = Math.abs(row - pieceRow);
+    const left: Vector = [row, pieceCol - rowsFromPiece];
+    const rght: Vector = [row, pieceCol + rowsFromPiece];
 
-      if (col === pieceCol - rowsFromPiece || col === pieceCol + rowsFromPiece) {
-        attacks.push([row, col]);
-      }
-    }
+    attacks.push(left, rght);
   }
 
+  // Return only attacks within game bounds
   return attacks;
 }
 
@@ -173,11 +172,11 @@ function getRookAttacks([pieceRow, pieceCol]: Vector, maxWidth: number, maxHeigh
   const attacks: Vector[] = [];
 
   for (let row = 0; row < maxHeight; row++) {
-    for (let col = 0; col < maxWidth; col++) {
-      if (col === pieceCol || row === pieceRow) {
-        attacks.push([row, col]);
-      }
-    }
+    attacks.push([row, pieceCol]);
+  }
+
+  for (let col = 0; col < maxWidth; col++) {
+    attacks.push([pieceRow, col]);
   }
 
   return attacks;
@@ -194,7 +193,7 @@ function getQueenAttacks([pieceRow, pieceCol]: Vector, maxWidth: number, maxHeig
   const diagonals: Vector[] = getBishopAttacks([pieceRow, pieceCol], maxWidth, maxHeight);
   const straights: Vector[] = getRookAttacks([pieceRow, pieceCol], maxWidth, maxHeight);
 
-  return Array.from(new Set([...diagonals, ...straights]));
+  return [...diagonals, ...straights];
 }
 
 /**
