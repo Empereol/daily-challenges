@@ -113,16 +113,13 @@ function getAvailableAttacks(piece: GamePiece, maxWidth: number = 8, maxHeight: 
  *        [4,3] ← Current position
  *     [5,2] [5,4]
  * @param param0 Starting vector
+ * @param Attack direction. Either 1 (down) or -1 (up)
  */
-function getPawnAttacks([pieceRow, pieceCol]: Vector): Vector[] {
-  // TODO: Pawns can actually only attack in one direction...
-  // Either towards/down (enemy pawn) or away/up (your pawn)
-  const upLeft: Vector = [pieceRow - 1, pieceCol - 1];
-  const upRight: Vector = [pieceRow - 1, pieceCol + 1];
-  const bottomLeft: Vector = [pieceRow + 1, pieceCol - 1];
-  const bottomRight: Vector = [pieceRow + 1, pieceCol + 1];
+function getPawnAttacks([pieceRow, pieceCol]: Vector, direction: number = 1): Vector[] {
+  const left: Vector = [pieceRow + direction, pieceCol - 1];
+  const rght: Vector = [pieceRow + direction, pieceCol + 1];
 
-  return [upLeft, upRight, bottomLeft, bottomRight];
+  return [left, rght];
 }
 
 /**
@@ -198,16 +195,16 @@ function getQueenAttacks([pieceRow, pieceCol]: Vector, maxWidth: number, maxHeig
  * @param param0 Starting vector
  */
 function getKnightAttacks([pieceRow, pieceCol]: Vector): Vector[] {
-  const upLeft: Vector = [pieceRow - 2, pieceCol - 1];
-  const upRight: Vector = [pieceRow - 2, pieceCol + 1];
-  const downLeft: Vector = [pieceRow + 2, pieceCol - 1];
-  const downRight: Vector = [pieceRow + 2, pieceCol + 1];
-  const rightUp: Vector = [pieceRow - 1, pieceCol + 2];
-  const rightDown: Vector = [pieceRow + 1, pieceCol + 2];
-  const leftUp: Vector = [pieceRow - 1, pieceCol - 2];
-  const leftDown: Vector = [pieceRow + 1, pieceCol - 2];
+  const ul: Vector = [pieceRow - 2, pieceCol - 1]; // Up Left
+  const ur: Vector = [pieceRow - 2, pieceCol + 1]; // Up Right
+  const dl: Vector = [pieceRow + 2, pieceCol - 1]; // Down Left
+  const dr: Vector = [pieceRow + 2, pieceCol + 1]; // Down Right
+  const ru: Vector = [pieceRow - 1, pieceCol + 2]; // Right Up
+  const rd: Vector = [pieceRow + 1, pieceCol + 2]; // Right Down
+  const lu: Vector = [pieceRow - 1, pieceCol - 2]; // Left Up
+  const ld: Vector = [pieceRow + 1, pieceCol - 2]; // Left Down
 
-  return [upLeft, upRight, downLeft, downRight, rightUp, rightDown, leftUp, leftDown];
+  return [ul, ur, dl, dr, ru, rd, lu, ld];
 }
 
 (function main() {
