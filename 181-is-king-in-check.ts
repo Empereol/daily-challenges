@@ -49,7 +49,7 @@ interface GamePiece {
 function kingIsInCheck(chessboard: string[][]): boolean {
   // Check for squareness of the gameboard by comparing the amount
   // of cols of each row against the total amount of rows
-  if (chessboard.every(row => row.length === chessboard.length)) {
+  if (!chessboard.every(row => row.length === chessboard.length)) {
     console.warn('Game board is invalid. Not square...');
     return false;
   }
