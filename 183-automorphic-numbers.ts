@@ -20,7 +20,7 @@ autoMorphic(625)
 autoMorphic(225)
 */
 
-function isAutoMorphic(input: number): boolean {
+function isAutomorphic(input: number): boolean {
   return (input ** 2).toString().endsWith(input.toString());
 }
 
@@ -34,11 +34,11 @@ function isAutoMorphic(input: number): boolean {
   ];
 
   for (const [test, expected] of tests) {
-    const answer = isAutoMorphic(test);
+    const answer = isAutomorphic(test);
 
     console.log(answer === expected ? "PASS" : "FAIL", {
       test,
-      isAutoMorphic: answer,
+      isAutomorphic: answer,
       expected
     });
   }
