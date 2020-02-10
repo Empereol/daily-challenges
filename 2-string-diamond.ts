@@ -14,10 +14,11 @@ Note: JS and Python students must implement diamond() method and return None (Py
 
 /**
  * Creates an ASCII diamond
- * @param width Maximum width of diamond (at center). Must be an positive odd number
+ * @param width Maximum width of diamond (at center). Must be a positive odd number
  */
 function diamond(width: number): string {
   if (!(width % 2) || width < 0) {
+    console.warn('Invalid input. Width must be a positive odd number.');
     return null;
   }
 
