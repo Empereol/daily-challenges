@@ -27,10 +27,15 @@ function capitalizeFirstLast(input: string): string {
     .toLowerCase()
     .split(" ")
     .map(word => {
-      return word.split("").reduce((acc, cur, idx) => {
-        if (idx === 0 || idx === word.length - 1) cur = cur.toUpperCase();
-        return acc + cur;
-      }, "");
+      if (word.length === 1) {
+        return word.toUpperCase();
+      } else {
+        return (
+          word.substring(0, 1).toUpperCase() +
+          word.substring(1, word.length - 1) +
+          word.substring(word.length - 1).toUpperCase()
+        );
+      }
     })
     .join(" ");
 }
@@ -41,7 +46,8 @@ function capitalizeFirstLast(input: string): string {
     ["when words fail music speaks", "WheN WordS FaiL MusiC SpeakS"],
     ["WHAT WE THINK WE BECOME", "WhaT WE ThinK WE BecomE"],
     ["dIe wITh mEMORIEs nOt dREAMs", "DiE WitH MemorieS NoT DreamS"],
-    ["hello", "HellO"]
+    ["hello", "HellO"],
+    ["an injured lion", 'AN InjureD LioN']
   ];
 
   for (const [test, expected] of tests) {
