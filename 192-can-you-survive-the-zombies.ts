@@ -48,7 +48,7 @@ function zombieShootout(zombieCount: number, range: number, ammoCount: number, z
   let remainingAmmo = ammoCount;
 
   for (let r = range; r >= 0; r -= zombiePace) {
-    if (r === 0 && zombieCount) {
+    if (r === 0 && killedZombies !== zombieCount) {
       return `You shot ${killedZombies} zombies before being eaten: overwhelmed.`;
     }
 
