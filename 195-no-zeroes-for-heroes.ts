@@ -22,9 +22,7 @@
  */
 
 function trimTrailingZeroes(input: number): number {
-  return input.toString().length === 1
-    ? input
-    : parseFloat(input.toString().replace(/0+$/g, ""));
+  return parseFloat(input.toString().replace(/(?<=\d)0+$/g, ""));
 }
 
 (function main(): void {
