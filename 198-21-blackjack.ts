@@ -23,7 +23,7 @@
  * ["5", "3", "7"]
  */
 
-type Cards = 'J' | 'Q' | 'K' | 'A' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '10';
+type Cards = 'J' | 'Q' | 'K' | 'A' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '10';
 
 const FaceCards: Partial<Record<Cards, number>> = {
   J: 10,
