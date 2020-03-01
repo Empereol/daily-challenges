@@ -69,7 +69,7 @@ function blackjackScore(cards: Cards[]): number {
 
   for (const [test, expected] of tests) {
     console.log(blackjackScore(test) === expected ? 'PASS' : 'FAIL', {
-      test,
+      test: test.join(),
       expected,
       result: blackjackScore(test)
     });
