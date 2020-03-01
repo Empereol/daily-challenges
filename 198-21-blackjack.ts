@@ -38,7 +38,7 @@ const FaceCards: Partial<Record<Cards, number>> = {
  * If there is no score less than or equal to 21, returns the smallest score more than 21.
  * @param cards Cards dealt to player
  */
-function blackjackScore(cards: Cards[]) {
+function blackjackScore(cards: Cards[]): number {
   // Get a base score by summing all cards
   let score = cards
     .map(card => FaceCards[card] || Number(card)) // Map each card to it's value
