@@ -34,27 +34,29 @@
  * a = { 100: [19,12], 1000: [39,28], 10000: [205,162], 100000: [713,586] }
  */
 
-function* allRationals(): Generator<[number, number], void, void> {
-  const rationals: [number, number][] = [[1, 1]];
+function* allRationals(
+  start: number,
+  amount: number
+): Generator<[number, number], [number, number], void> {
+  let rationals: [number, number][] = [[1, 1]];
 
+  let i = 0;
   while (true) {
-    const rational = rationals[0];
-    yield rational;
-    rationals.shift();
+    const rational = rationals[i];
     rationals.push([rational[0], rational[0] + rational[1]]);
     rationals.push([rational[0] + rational[1], rational[1]]);
-  }
-}
 
-function* take<T>(n: number, iter: Iterable<T>) {
-  let index = 0;
-  for (const val of iter) {
-    if (index >= n) {
-      return;
+    if (i >= start) {
+      yield rational;
     }
-    index = index + 1;
-    yield val;
+
+    if (i === start + amount - 1) {
+      return rational;
+    }
+
+    i++;
   }
 }
-
-console.log(...take(101, allRationals()));
+for (const rational of allRationals(0, 101)) {
+  console.log(rational);
+}
