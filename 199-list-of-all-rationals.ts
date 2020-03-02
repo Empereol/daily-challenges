@@ -34,7 +34,7 @@
  * a = { 100: [19,12], 1000: [39,28], 10000: [205,162], 100000: [713,586] }
  */
 
-function* allRationals(): Generator<[number, number]> {
+function* allRationals(): Generator<[number, number], void, void> {
   const rationals: [number, number][] = [[1, 1]];
 
   while (true) {
@@ -46,7 +46,7 @@ function* allRationals(): Generator<[number, number]> {
   }
 }
 
-function* take<T>(n: number, iter: Iterable<T>): Generator<T> {
+function* take<T>(n: number, iter: Iterable<T>) {
   let index = 0;
   for (const val of iter) {
     if (index >= n) {
