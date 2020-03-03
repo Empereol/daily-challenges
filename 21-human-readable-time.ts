@@ -17,6 +17,11 @@
  * format_duration(3662) # returns "1 hour, 1 minute and 2 seconds"
  */
 
+/*
+ * This solution is based on https://dev.to/graciano/comment/d9oc since I thought it was clever
+ * I cleaned it up, added types, and fixed the "comma"/"and" issue
+ */
+
 type TimeFn = (time: number) => number;
 type TimeSegment = "year" | "day" | "hour" | "minute" | "second";
 
@@ -33,19 +38,19 @@ const TimeSegmentsFns: { [key in TimeSegment]: TimeFn } = {
   second: (time: number) => Math.floor(time % 60)
 };
 
-function timeSegment({ label, value }: LabelValue): string {
+function readableTimeSegment({ label, value }: LabelValue): string {
   return value > 1 ? `${value} ${label}s` : `${value} ${label}`;
 }
 
-function humanReadableTime(time: number): string {
+function formatDuration(time: number): string {
   const segments = Object.entries(TimeSegmentsFns)
     .map(([label, timeFn]): LabelValue => ({ label, value: timeFn(time) }))
-    .filter(({ value }) => value >= 1) // prevent '0 year 0 day...' polluting the final string
-    .map(timeSegment);
+    .filter(({ value }) => value >= 1)
+    .map(readableTimeSegment);
 
   return segments.length > 1
     ? `${segments.slice(0, -1).join(", ")} and ${segments.slice(-1)}`
     : segments.toString();
 }
 
-console.log(humanReadableTime(24 * 60 * 60 * 12.52));
+console.log(formatDuration(24 * 60 * 60 * 12.52));
