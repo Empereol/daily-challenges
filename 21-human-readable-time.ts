@@ -23,19 +23,19 @@
  */
 
 type TimeFn = (time: number) => number;
-type TimeSegment = "year" | "day" | "hour" | "minute" | "second";
+type TimeSegment = 'year' | 'day' | 'hour' | 'minute' | 'second';
 
 interface LabelValue {
   label: string;
   value: string | number;
 }
 
-const TimeSegmentsFns: { [key in TimeSegment]: TimeFn } = {
-  year: (time: number) => Math.floor(time / (365 * 24 * 60 * 60)),
-  day: (time: number) => Math.floor((time / (24 * 60 * 60)) % 365),
-  hour: (time: number) => Math.floor((time / (60 * 60)) % 24),
-  minute: (time: number) => Math.floor((time / 60) % 60),
-  second: (time: number) => Math.floor(time % 60)
+const TimeSegmentFns: { [key in TimeSegment]: TimeFn } = {
+  year: time => Math.floor(time / (365 * 24 * 60 * 60)),
+  day: time => Math.floor((time / (24 * 60 * 60)) % 365),
+  hour: time => Math.floor((time / (60 * 60)) % 24),
+  minute: time => Math.floor((time / 60) % 60),
+  second: time => Math.floor(time % 60)
 };
 
 function readableTimeSegment({ label, value }: LabelValue): string {
@@ -43,14 +43,14 @@ function readableTimeSegment({ label, value }: LabelValue): string {
 }
 
 function formatDuration(time: number): string {
-  const segments = Object.entries(TimeSegmentsFns)
+  const segments = Object.entries(TimeSegmentFns)
     .map(([label, timeFn]): LabelValue => ({ label, value: timeFn(time) }))
     .filter(({ value }) => value >= 1)
     .map(readableTimeSegment);
 
   return segments.length > 1
-    ? `${segments.slice(0, -1).join(", ")} and ${segments.slice(-1)}`
+    ? `${segments.slice(0, -1).join(', ')} and ${segments.slice(-1)}`
     : segments.toString();
 }
 
-console.log(formatDuration(24 * 60 * 60 * 12.52));
+console.log(formatDuration(24 * 60 * 60 * 365 * 12.251));
