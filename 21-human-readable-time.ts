@@ -34,17 +34,13 @@ const TimeSegmentsFns: { [key in TimeSegment]: TimeFn } = {
 };
 
 function timeSegment({ label, value }: LabelValue): string {
-  if (!value) {
-    return;
-  }
-
   return value > 1 ? `${value} ${label}s` : `${value} ${label}`;
 }
 
 function humanReadableTime(time: number): string {
   const segments = Object.entries(TimeSegmentsFns)
     .map(([label, timeFn]): LabelValue => ({ label, value: timeFn(time) }))
-    .filter(({ value }) => value > 0) // prevent '0 year 0 day...' polluting the final string
+    .filter(({ value }) => value >= 1) // prevent '0 year 0 day...' polluting the final string
     .map(timeSegment);
 
   return segments.length > 1
