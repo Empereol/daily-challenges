@@ -12,12 +12,15 @@
 
 function pigIt(input: string): string {
   return input.split(/\b/g).reduce((output, word) => {
+    // If the word is not a digit or letter...
+    // Or if it's an underscore since that's included in \w...
+    // Then we just append it to the output without pig latin'ing it.
     if (word.match(/[^\w]+|_/g)) {
       return output + word;
     }
 
-    // Return output with new word pig latin'd
-    // Moves the first letter of the word to the end, then add "ay"
+    // Append output with new word pig latin'd
+    // (Moves the first letter of the word to the end, then add "ay")
     return output + word.substring(1) + word.substring(0, 1) + "ay";
   }, "");
 }
