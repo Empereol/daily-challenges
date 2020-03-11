@@ -23,13 +23,13 @@
  */
 
 function pattern(n: number): string {
-  let pattern = "";
+  let pattern = '';
 
   for (let i = 1; i <= n; i++) {
     pattern += Array(i)
       .fill(i)
-      .join("");
-    pattern += "\n";
+      .join('');
+    pattern += '\n';
   }
 
   return pattern;
