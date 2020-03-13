@@ -31,7 +31,7 @@ function easyline(n: number): number {
   return n === 0 ? 1 : ((2 * (2 * n - 1)) / n) * easyline(n - 1);
 }
 
-(function main(): void {
+(function Main(): void {
   const tests: [number, number][] = [
     [0, 1],
     [1, 2],
@@ -42,10 +42,51 @@ function easyline(n: number): number {
   for (const [test, expected] of tests) {
     const result = easyline(test);
 
-    console.log(result === expected ? "PASS" : "FAIL", {
+    console.log(result === expected ? 'PASS' : 'FAIL', {
       test,
       expected,
       result
     });
   }
 })();
+
+/**
+ * More research into Pascal's Triangle and binomial coefficients...
+ * https://www.geeksforgeeks.org/pascal-triangle/
+ */
+function pascalsTriangle(n: number): number[][] {
+  const pascalArr: number[][] = [];
+
+  for (let line = 0; line < n; line++) {
+    pascalArr.push(pascalsTriangleRow(line));
+  }
+
+  return pascalArr;
+}
+
+function pascalsTriangleRow(row: number): number[] {
+  const arr: number[] = [];
+
+  for (let i = 0; i <= row; i++) {
+    arr.push(binomialCoeff(row, i));
+  }
+
+  return arr;
+}
+
+function binomialCoeff(n: number, k: number): number {
+  let res = 1;
+
+  if (k > n - k) k = n - k;
+
+  for (let i = 0; i < k; i++) {
+    res *= n - i;
+    res /= i + 1;
+  }
+
+  return res;
+}
+
+function easylineII(n: number) {
+  return pascalsTriangleRow(n).reduce((total, col) => (total += col ** 2));
+}
