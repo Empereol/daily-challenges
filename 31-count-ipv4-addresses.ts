@@ -26,9 +26,10 @@ function ipsBetween(startIpv4: string, endIpv4: string): number {
  * @param {string} ipv4 IPv4 address
  */
 function ipv4ToInt(ipv4: string): number {
-  const validIpRe: RegExp = /\b((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b/;
+  // https://ihateregex.io/expr/ip
+  const ipv4Re: RegExp = /(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}/;
 
-  if (validIpRe.test(ipv4) === false) {
+  if (ipv4Re.test(ipv4) === false) {
     console.warn('Invalid IPv4 string supplied');
     return;
   }
