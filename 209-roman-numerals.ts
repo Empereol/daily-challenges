@@ -32,8 +32,9 @@
  */
 
 type RomanNumeral = 'I' | 'V' | 'X' | 'L' | 'C' | 'D' | 'M';
+type RomanNumeralValue = Record<RomanNumeral, number>;
 
-const RomanNumerals: Record<RomanNumeral, number> = {
+const RomanNumeralValue: RomanNumeralValue = {
   I: 1,
   V: 5,
   X: 10,
@@ -49,7 +50,7 @@ const RomanNumerals: Record<RomanNumeral, number> = {
  */
 function romanNumeralToInt(input: string): number {
   return Array.from(input)
-    .map(n => RomanNumerals[n])
+    .map(n => RomanNumeralValue[n])
     .filter(Number)
     .reduce((total, val, idx, arr) => {
       if (val >= (arr[idx + 1] || 0)) {
