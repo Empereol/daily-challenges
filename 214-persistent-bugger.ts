@@ -23,13 +23,28 @@
  */
 
 /**
- * Returns a number's multiplicative persistence, which is the number of times you
+ * Computes a number's multiplicative persistence, which is the number of times you
  * must multiply the digits in num until you reach a single digit.
- * @param num Number
+ *
+ * @param {number} num The number to compute it's multiplicative persistence from.
+ *
+ * @throws {TypeError}  If the number provided is not an integer.
+ * @throws {RangeError} If the number provided is not a positive integer.
+ *
+ * @return {number} Returns a number's multiplicative persistence.
+ *
+ * @example
+ * persistence(39) === 3 // 3*9 → 2*7 → 1*4 (3 steps)
+ * persistence(999) === 4 // 9*9*9 → 7*2*9 → 1*2*6 → 1*2 (4 steps)
+ * persistence(4) === 0 // 4 is already a one-digit number (0 steps)
  */
 function persistence(num: number): number {
+  if (num < 0) {
+    throw new RangeError('Supplied number must be a positive integer.');
+  }
+
   if (!Number.isInteger(num)) {
-    throw new Error('Supplied num must be an integer');
+    throw new TypeError('Supplied number must be an integer');
   }
 
   if (num < 10) return 0;
