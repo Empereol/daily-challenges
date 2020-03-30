@@ -39,15 +39,17 @@
  * persistence(4) === 0 // 4 is already a one-digit number (0 steps)
  */
 function persistence(num: number): number {
-  if (num < 0) {
-    throw new RangeError('Supplied number must be a positive integer.');
-  }
-
   if (!Number.isInteger(num)) {
     throw new TypeError('Supplied number must be an integer');
   }
 
-  if (num < 10) return 0;
+  if (num < 0) {
+    throw new RangeError('Supplied number must be a positive integer.');
+  }
+
+  if (num < 10) {
+    return 0;
+  }
 
   const nums: number[] = Array.from(num.toString(), char => parseInt(char));
 
