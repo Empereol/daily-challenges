@@ -12,8 +12,7 @@ function countSheep(sheep: number): string {
     return;
   }
 
-  return Array.from({ length: sheep }, (_, idx) => `${idx + 1} sheep...`).join("");
+  return Array.from({ length: sheep }, (_, idx) => `${idx + 1} sheep...`).join('');
 }
 
 console.log(countSheep(5)); //→ 1 sheep...2 sheep...3 sheep...4 sheep...5 sheep...
-
