@@ -22,6 +22,11 @@
  * persistence(377)
  */
 
+/**
+ * Returns a number's multiplicative persistence, which is the number of times you
+ * must multiply the digits in num until you reach a single digit.
+ * @param num Number
+ */
 function persistence(num: number): number {
   if (!Number.isInteger(num)) {
     throw new Error('Supplied num must be an integer');
