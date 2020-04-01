@@ -112,9 +112,3 @@ function variance(town: string, data: string): number {
   console.log(mean('London', data));
   console.log(variance('London', data));
 })();
-
-/**
- *
- * @param nums
- */
-function test(...nums): void {}
