@@ -50,6 +50,9 @@
  * variance(Lima, data);
  */
 
+/**
+ * Math Utilities
+ */
 interface Math {
   mean(...values: number[]): number;
   variance(...values: number[]): number;
@@ -62,6 +65,9 @@ Math.variance = (...values: number[]): number => {
   return Math.mean(...values.map(v => (v - mean) ** 2));
 };
 
+/**
+ * Rainfall
+ */
 interface RainData {
   town: string;
   values: number[];
