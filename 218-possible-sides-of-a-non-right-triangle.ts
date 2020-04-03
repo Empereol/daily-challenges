@@ -22,7 +22,7 @@
  * Examples
  * side_len(1, 1) --> [1]
  * side_len(3, 4) --> [2, 3, 4, 6]
- * side_len(4, 6) -->[3, 4, 5, 6, 7, 8, 9]
+ * side_len(4, 6) --> [3, 4, 5, 6, 7, 8, 9]
  *
  * Tests
  * side_len(5, 12)
@@ -31,7 +31,8 @@
  */
 
 /**
- * Return a list of all possible third side lengths (integers) without right trangles.
+ * Return a list of all possible third side lengths (integers) without right
+ * trangles.
  *
  * @param sideA Integer
  * @param sideB Integer
@@ -51,8 +52,8 @@ function sideLen(sideA: number, sideB: number): number[] {
   const min = Math.abs(sideA - sideB);
   const max = sideA + sideB;
   const hypot = Math.hypot(sideA, sideB);
-
   const lengths: number[] = [];
+
   for (let i = min + 1; i < max; i++) {
     if (i !== hypot) {
       lengths.push(i);
@@ -63,7 +64,8 @@ function sideLen(sideA: number, sideB: number): number[] {
 }
 
 /**
- * Return a list of all possible third side lengths (integers) without right trangles.
+ * Return a list of all possible third side lengths (integers) without right
+ * trangles.
  *
  * @param sideA Integer
  * @param sideB Integer
