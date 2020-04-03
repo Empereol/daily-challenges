@@ -50,6 +50,39 @@ function sideLen(sideA: number, sideB: number): number[] {
 
   const min = Math.abs(sideA - sideB);
   const max = sideA + sideB;
+  const hypot = Math.hypot(sideA, sideB);
+
+  const lengths: number[] = [];
+  for (let i = min + 1; i < max; i++) {
+    if (i !== hypot) {
+      lengths.push(i);
+    }
+  }
+
+  return lengths;
+}
+
+/**
+ * Return a list of all possible third side lengths (integers) without right trangles.
+ *
+ * @param sideA Integer
+ * @param sideB Integer
+ *
+ * @throws {TypeError} If either sideA or sideB is not an integer.
+ *
+ * @example
+ * sideLen(1, 1) → [1]
+ * sideLen(3, 4) → [2, 3, 4, 6] // 5 is removed as it's a right triangle
+ * sideLen(4, 6) → [3, 4, 5, 6, 7, 8, 9]
+ */
+function sideLenII(sideA: number, sideB: number): number[] {
+  if (!Number.isInteger(sideA) || !Number.isInteger(sideB)) {
+    throw new TypeError('Both provided parameters must be integers');
+  }
+
+  const min = Math.abs(sideA - sideB);
+  const max = sideA + sideB;
+
   const lengths: number[] = Array.from({ length: max - min - 1 }, (_, idx) => idx + min + 1);
 
   const hypotIdx = lengths.indexOf(Math.hypot(sideA, sideB));
