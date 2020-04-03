@@ -31,12 +31,17 @@
  */
 
 /**
- * Return a list of all possible third side lengths without right trangles
+ * Return a list of all possible third side lengths (integers) without right trangles.
+ *
+ * @param sideA Integer
+ * @param sideB Integer
+ *
+ * @throws {TypeError} If either sideA or sideB is not an integer.
  *
  * @example
- * sideLen(1, 1) // [1];
- * sideLen(3, 4) // [2, 3, 4, 6];
- * sideLen(4, 6) // [3, 4, 5, 6, 7, 8, 9];
+ * sideLen(1, 1) → [1]
+ * sideLen(3, 4) → [2, 3, 4, 6] // 5 is removed as it's a right triangle
+ * sideLen(4, 6) → [3, 4, 5, 6, 7, 8, 9]
  */
 function sideLen(sideA: number, sideB: number): number[] {
   if (!Number.isInteger(sideA) || !Number.isInteger(sideB)) {
