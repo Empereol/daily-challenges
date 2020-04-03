@@ -30,6 +30,14 @@
  * side_len(3, 4)
  */
 
+/**
+ * Return a list of all possible third side lengths without right trangles
+ *
+ * @example
+ * sideLen(1, 1) // [1];
+ * sideLen(3, 4) // [2, 3, 4, 6];
+ * sideLen(4, 6) // [3, 4, 5, 6, 7, 8, 9];
+ */
 function sideLen(sideA: number, sideB: number): number[] {
   if (!Number.isInteger(sideA) || !Number.isInteger(sideB)) {
     throw new TypeError('Both provided parameters must be integers');
