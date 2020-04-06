@@ -49,12 +49,12 @@ function sideLen(sideA: number, sideB: number): number[] {
     throw new TypeError('Both provided parameters must be integers');
   }
 
-  const min = Math.abs(sideA - sideB);
-  const max = sideA + sideB;
+  const min = Math.abs(sideA - sideB) + 1;
+  const max = sideA + sideB - 1;
   const hypot = Math.hypot(sideA, sideB);
   const lengths: number[] = [];
 
-  for (let i = min + 1; i < max; i++) {
+  for (let i = min; i <= max; i++) {
     if (i !== hypot) {
       lengths.push(i);
     }
