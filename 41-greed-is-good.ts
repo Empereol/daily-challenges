@@ -26,21 +26,21 @@
  * 2 4 4 5 4 => 400 + 50 = 450
  */
 
-interface GreedScoreData {
-  r: number; // Roll value
+interface GreedScore {
+  dv: number; // Dice roll value
   c: number; // Count
   p: number; // Points
 }
 
-const GreedScoreSheet: GreedScoreData[] = [
-  { r: 1, c: 3, p: 1000 },
-  { r: 6, c: 3, p: 600 },
-  { r: 5, c: 3, p: 500 },
-  { r: 4, c: 3, p: 400 },
-  { r: 3, c: 3, p: 300 },
-  { r: 2, c: 3, p: 200 },
-  { r: 1, c: 1, p: 100 },
-  { r: 5, c: 1, p: 50 }
+const GreedScoreRules: GreedScore[] = [
+  { dv: 1, c: 3, p: 1000 },
+  { dv: 6, c: 3, p: 600 },
+  { dv: 5, c: 3, p: 500 },
+  { dv: 4, c: 3, p: 400 },
+  { dv: 3, c: 3, p: 300 },
+  { dv: 2, c: 3, p: 200 },
+  { dv: 1, c: 1, p: 100 },
+  { dv: 5, c: 1, p: 50 }
 ];
 
 function dicebin(roll: number[], maxVal: number): number[] {
@@ -63,10 +63,10 @@ function greedPoints(...roll: number[]): number {
 
   // The GreedScoreSheet should be sorted by descending count
   // to ensure max point values
-  for (const { r, c, p } of GreedScoreSheet) {
-    const matches = Math.floor(db[r] / c);
-    db[r] -= matches * c;
-    score += matches * p;
+  for (const { dv: r, c: count, p: pts } of GreedScoreRules) {
+    const matches = Math.floor(db[r] / count);
+    db[r] -= matches * count;
+    score += matches * pts;
   }
 
   return score;
