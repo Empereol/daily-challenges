@@ -37,8 +37,9 @@ function hydrate(input: string): string {
     .map(Number)
     .reduce((acc, cur) => acc + cur, 0);
 
-  return `${drinks} glasses of water`;
+  return `${drinks} ${drinks === 1 ? 'glass' : 'glasses'} of water`;
 }
 
 console.log(hydrate('1 shot, 5 beers, 2 shots, 1 glass of wine, 1 beer'));
 console.log(hydrate('1 shot, 5 beers, 2 shots, 10 glass of wine, 1 beer'));
+console.log(hydrate('1 beer'));
